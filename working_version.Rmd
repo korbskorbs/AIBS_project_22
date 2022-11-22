@@ -1,0 +1,88 @@
+---
+title: "AIBS_project"
+output: html_document
+date: "2022-11-14"
+---
+
+Setting wd, importing data, preparing data and filtering data
+```{r}
+setwd("/Users/korbinianthiele/Desktop")
+library(ggplot2)
+library(patchwork)
+library(readr)
+library(MASS)
+library(caTools)
+#full data contains data from 214 countries, countries are numbered alphabetically
+#188=Switzerland, 82=Germany, 76=France, 203=US, 48=China, 46=UK, 101=Italy
+full_data <- read.csv2("AIBS/full_data.csv")
+filtered_data <- subset(full_data, full_data$cnt_now == 188 | full_data$cnt_now == 82 | full_data$cnt_now == 76 | full_data$cnt_now == 203 | full_data$cnt_now == 46 | full_data$cnt_now == 48 | full_data$cnt_now ==101)
+swiss_data <- subset(full_data, full_data$cnt_now == 188)
+swiss_data
+full_data
+```
+
+Here we try to do a boxplot, which contains all the information about agreeableness the different countries 
+
+```{r}
+library(ggplot2)
+boxplot(filtered_data$oagr ~ filtered_data$cnt_now, data = filtered_data, xlab = "Country",
+   ylab = "Agreeableness out of 5", main = "Average agreeableness of different countries", names = c("UK", "China", "France", "Germany", "Italy", "Switzerland", "US"))
+```
+
+Next, we have a look at conscientousness 
+```{r}
+boxplot(filtered_data$ocns ~ filtered_data$cnt_now, data = filtered_data, xlab = "Country",
+   ylab = "Counscientousness out of 5", main = "Average conscientousness of different countries", names = c("UK", "China", "France", "Germany", "Italy", "Switzerland", "US"))
+```
+
+Next, we have a look at extraversion 
+```{r}
+boxplot(filtered_data$oext ~ filtered_data$cnt_now, data = filtered_data, xlab = "Country",
+   ylab = "Extraversion out of 5", main = "Average extraversion of different countries", names = c("UK", "China", "France", "Germany", "Italy", "Switzerland", "US"))
+```
+
+Next, we have a look at openness 
+```{r}
+boxplot(filtered_data$oopn ~ filtered_data$cnt_now, data = filtered_data, xlab = "Country",
+   ylab = "Openness out of 5", main = "Average openness of different countries", names = c("UK", "China", "France", "Germany", "Italy", "Switzerland", "US"))
+```
+
+Next, we have a look at neuroticism 
+```{r}
+boxplot(filtered_data$oneu ~ filtered_data$cnt_now, data = filtered_data, xlab = "Country",
+   ylab = "Neuroticism out of 5", main = "Average neuroticism of different countries", names = c("UK", "China", "France", "Germany", "Italy", "Switzerland", "US"))
+```
+
+In a next step, we also calculate the standard deviation as well as the mean to get the actual numbers for the Swiss population 
+```{r}
+swiss_agr_sd <- sd(swiss_data$oagr)
+swiss_agr_mean <- mean(swiss_data$oagr)
+cat("Mean Agreeableness Swiss Population:", swiss_agr_mean , "|  Standard Deviation Swiss Population:", swiss_agr_sd)
+```
+
+```{r}
+swiss_cns_sd <- sd(swiss_data$ocns)
+swiss_cns_mean <- mean(swiss_data$ocns)
+cat("Mean Conscientousness Swiss Population:", swiss_cns_mean , "|  Standard Conscientousness Swiss Population:", swiss_cns_sd)
+```
+
+```{r}
+swiss_ext_sd <- sd(swiss_data$oext)
+swiss_ext_mean <- mean(swiss_data$oext)
+cat("Mean Extraversion Swiss Population:", swiss_ext_mean , "|  Standard Extraversion Swiss Population:", swiss_ext_sd)
+```
+
+```{r}
+swiss_opn_sd <- sd(swiss_data$oopn)
+swiss_opn_mean <- mean(swiss_data$oopn)
+cat("Mean Openness Swiss Population:", swiss_opn_mean , "|  Standard Openness Swiss Population:", swiss_opn_sd)
+```
+
+```{r}
+swiss_neu_sd <- sd(swiss_data$oneu)
+swiss_neu_mean <- mean(swiss_data$oneu)
+cat("Mean Neuroticism Swiss Population:", swiss_neu_mean , "|  Standard Neuroticism Swiss Population:", swiss_neu_sd)
+```
+
+
+
